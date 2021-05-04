@@ -90,7 +90,6 @@ module.exports = (client, message) => {
                             message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                         return;
                     }
-		    settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.push(kelime);
                     if(settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.includes(kelime)){
                         const embed = new Discord.MessageEmbed()
                             .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
@@ -99,6 +98,7 @@ module.exports = (client, message) => {
                         message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                         return;
                     }
+		    settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.push(kelime);
                     message.react('✔️');
                     if(puanlar_client_index == -1){
                         settings_puanlar_guilds[puanlar_guilds_index].puanlar.push({
