@@ -57,11 +57,19 @@ module.exports = (client, message) => {
                 message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                 return;
             }
-            if(sonharf == 'ğ' && settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length < 3000){
-                let kalan_kelime = 3000 - settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length;
+            if(kelim.length <= 1){
                 const embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
-                    .setDescription(`Oyun bitirici kelimeleri yazmak için biraz daha oynamanız gerekmekte.\nKalan kelime sayısı ${kalan_kelime}`)
+                    .setDescription(`Yazmış olduğun **${kelime}** kelimesi çok kısa.`)
+                    .setColor("#FFFFFF");
+                message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
+                return;                
+            }
+            if(sonharf == 'ğ' && settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length < 1500){
+                let kalan_kelime = 1500 - settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length;
+                const embed = new Discord.MessageEmbed()
+                    .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
+                    .setDescription(`Oyun bitirici kelimeleri yazmak için biraz daha oynamanız gerekmekte.\nKalan kelime sayısı **${kalan_kelime}**`)
                     .setColor("#FFFFFF");
                 message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                 return;
@@ -98,7 +106,7 @@ module.exports = (client, message) => {
                         message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                         return;
                     }
-		    settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.push(kelime);
+		            settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.push(kelime);
                     message.react('✔️');
                     if(puanlar_client_index == -1){
                         settings_puanlar_guilds[puanlar_guilds_index].puanlar.push({
@@ -111,7 +119,7 @@ module.exports = (client, message) => {
                     settings_son_kelime_yazan[son_kelime_yazan_index].son_kelime_yazan = message.author.id;
                     settings_son_kelime[son_kelime_index].son_kelime = kelime;
                     settings_son_kelime[son_kelime_index].son_harf = sonharf;
-                    if(sonharf == 'ğ' && settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length >= 3000){
+                    if(sonharf == 'ğ' && settings_kullanilan_kelimeler_guilds[kullanilan_kelimeler_guilds_index].kullanilan_kelimeler.length >= 1500){
                         const embed = new Discord.MessageEmbed()
                             .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
                             .setDescription(`${message.author},  Kilit kelimeyi yazarak oyunu bitirdi tebrikler birazdan yeni oyun başlayacak <3.`)
