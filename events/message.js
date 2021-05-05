@@ -57,7 +57,7 @@ module.exports = (client, message) => {
                 message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                 return;
             }
-            if(kelim.length <= 1){
+            if(kelime.length <= 1){
                 const embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
                     .setDescription(`Yazmış olduğun **${kelime}** kelimesi çok kısa.`)
