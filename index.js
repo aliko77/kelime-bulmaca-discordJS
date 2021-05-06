@@ -43,58 +43,65 @@ client.on('ready', async() => {
     fs.readFile(settings_path, 'utf-8', function(err, data) {
         if (err) throw err
         var arrayOfObjects = JSON.parse(data);
-        var settings_channels = arrayOfObjects.channels;
-        var settings_son_kelime = arrayOfObjects.son_kelime;
-        var settings_son_kelime_yazan = arrayOfObjects.son_kelime_yazan;
-        var settings_kullanilan_kelimeler_guilds = arrayOfObjects.kullanilan_kelimeler_guilds;
-        var settings_game_bool = arrayOfObjects.game_bool;
-        var settings_puanlar = arrayOfObjects.puanlar;
+        if(!arrayOfObjects.channels){
+            arrayOfObjects.channels = [];
+        }if(!arrayOfObjects.son_kelime){
+            arrayOfObjects.son_kelime = [];
+        }if(!arrayOfObjects.son_kelime_yazan){
+            arrayOfObjects.son_kelime_yazan = [];
+        }if(!arrayOfObjects.kullanilan_kelimeler_guilds){
+            arrayOfObjects.kullanilan_kelimeler_guilds = [];
+        }if(!arrayOfObjects.game_bool){
+            arrayOfObjects.game_bool = [];
+        }if(!arrayOfObjects.puanlar){
+            arrayOfObjects.puanlar = [];
+        }
         Guilds.forEach(element => {
-            let kanal_index = settings_channels.findIndex(find => find.guild_id === element);
-            let game_bool_index = settings_game_bool.findIndex(find => find.guild_id === element);
-            let son_kelime_index = settings_son_kelime.findIndex(find => find.guild_id === element);
-            let son_kelime_yazan_index = settings_son_kelime_yazan.findIndex(find => find.guild_id === element);
-            let kullanilan_kelimeler_guilds_index = settings_kullanilan_kelimeler_guilds.findIndex(find => find.guild_id === element);
-            let puan_index = settings_puanlar.findIndex(find => find.guild_id === element);
+            let kanal_index = arrayOfObjects.channels.findIndex(find => find.guild_id === element);
+            let game_bool_index = arrayOfObjects.game_bool.findIndex(find => find.guild_id === element);
+            let son_kelime_index = arrayOfObjects.son_kelime.findIndex(find => find.guild_id === element);
+            let son_kelime_yazan_index = arrayOfObjects.son_kelime_yazan.findIndex(find => find.guild_id === element);
+            let kullanilan_kelimeler_guilds_index = arrayOfObjects.kullanilan_kelimeler_guilds.findIndex(find => find.guild_id === element);
+            let puan_index = arrayOfObjects.puanlar.findIndex(find => find.guild_id === element);
             if(puan_index == -1){
-                settings_puanlar.push({
+                arrayOfObjects.puanlar.push({
                     guild_id : element,
                     puanlar:[]
                 });
             }
             if(game_bool_index == -1){
-                settings_game_bool.push({
+                arrayOfObjects.game_bool.push({
                     guild_id : element
                 });
             }
             if(kanal_index == -1){
-				settings_channels.push({
+				arrayOfObjects.channels.push({
                     guild_id : element
                 });
             }
             if(son_kelime_yazan_index == -1){
-                settings_son_kelime_yazan.push({
+                arrayOfObjects.son_kelime_yazan.push({
                     guild_id : element
                 });
             }
             if(kullanilan_kelimeler_guilds_index == -1){
-                settings_kullanilan_kelimeler_guilds.push({
+                arrayOfObjects.kullanilan_kelimeler_guilds.push({
                     guild_id : element,
                     kullanilan_kelimeler : []
                 });
             }
             if(son_kelime_index == -1){
-                settings_son_kelime.push({
+                arrayOfObjects.son_kelime.push({
                     guild_id : element
                 });
             }
         });
-        global.fullarr.puanlar = settings_puanlar;
-        global.fullarr.game_bool = settings_game_bool;
-        global.fullarr.channels = settings_channels;
-        global.fullarr.son_kelime_yazan = settings_son_kelime_yazan;
-        global.fullarr.kullanilan_kelimeler_guilds = settings_kullanilan_kelimeler_guilds;
-        global.fullarr.son_kelime = settings_son_kelime;
+        global.fullarr.puanlar = arrayOfObjects.puanlar;
+        global.fullarr.game_bool = arrayOfObjects.game_bool;
+        global.fullarr.channels = arrayOfObjects.channels;
+        global.fullarr.son_kelime_yazan = arrayOfObjects.son_kelime_yazan;
+        global.fullarr.kullanilan_kelimeler_guilds = arrayOfObjects.kullanilan_kelimeler_guilds;
+        global.fullarr.son_kelime = arrayOfObjects.son_kelime;
         fs.writeFile(settings_path, JSON.stringify(arrayOfObjects, null, 2), 'utf-8', function(err) {
             if (err) throw err;
         });
