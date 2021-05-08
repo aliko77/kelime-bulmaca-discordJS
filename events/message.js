@@ -26,6 +26,7 @@ module.exports = (client, message) => {
             let sonharf = message.content.length;
             let kelime = message.content.toLowerCase();
             sonharf = kelime.charAt(sonharf - 1);
+            var reg = /[^a-zA-Z]/g;
             if(global.fullarr.son_kelime_yazan[son_kelime_yazan_index].son_kelime_yazan == message.author.id){
                 const embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
@@ -33,6 +34,14 @@ module.exports = (client, message) => {
                     .setColor("#FFFFFF");
                 message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                 return;
+            }
+            if(kelime.match(reg)){
+                const embed = new Discord.MessageEmbed()
+                    .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
+                    .setDescription(`**${kelime}**, geçersiz karakter içeriyor. Lütfen sadece türkçe karakter ve harf kullanın.`)
+                    .setColor("#FFFFFF");
+                message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
+                return;                
             }
             if(global.fullarr.son_kelime[son_kelime_index].son_harf && global.fullarr.son_kelime[son_kelime_index].son_harf !== kelime[0]){
                 let stngssonharf = global.fullarr.son_kelime[son_kelime_index].son_harf;
