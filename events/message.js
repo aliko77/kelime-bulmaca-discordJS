@@ -24,7 +24,8 @@ module.exports = (client, message) => {
             let son_kelime_yazan_index = global.fullarr.son_kelime_yazan.findIndex(find => find.guild_id === message.guild.id);
             let kullanilan_kelimeler_guilds_index = global.fullarr.kullanilan_kelimeler_guilds.findIndex(find => find.guild_id === message.guild.id);            
             let sonharf = message.content.length;
-            let kelime = message.content.toLowerCase();
+            let kelime = message.content.turkishtoEnglish();
+            kelime = kelime.toLowerCase();
             sonharf = kelime.charAt(sonharf - 1);
             var reg = /\s[^a-zA-Z]/g;
             if(global.fullarr.son_kelime_yazan[son_kelime_yazan_index].son_kelime_yazan == message.author.id){
@@ -60,7 +61,7 @@ module.exports = (client, message) => {
                 message.channel.send(embed).then(del => del.delete({timeout:2000} , message.delete({timeout:2000})));
                 return;
             }
-            if(kelime.length <= 1){
+            if(kelime.length <= 2){
                 const embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
                     .setDescription(`Yazmış olduğun **${kelime}** kelimesi çok kısa.`)
@@ -161,4 +162,13 @@ module.exports = (client, message) => {
             );
         }
     }
+};
+String.prototype.turkishtoEnglish = function () {
+    return this.replace('Ğ','ğ')
+        .replace('Ü','ü')
+        .replace('Ş','ş')
+        .replace('I','ı')
+        .replace('İ','i')
+        .replace('Ö','ö')
+        .replace('Ç','ç');
 };
