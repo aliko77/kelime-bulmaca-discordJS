@@ -26,7 +26,7 @@ module.exports = (client, message) => {
             let sonharf = message.content.length;
             let kelime = message.content.toLowerCase();
             sonharf = kelime.charAt(sonharf - 1);
-            var reg = /[^a-zA-Z]/g;
+            var reg = /\s[^a-zA-Z]/g;
             if(global.fullarr.son_kelime_yazan[son_kelime_yazan_index].son_kelime_yazan == message.author.id){
                 const embed = new Discord.MessageEmbed()
                     .setAuthor(message.author.username, message.author.avatarURL(),"https://leaderclan.com")
